@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King Style - Tienda de Indumentaria</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="navbar"></div>
+
+<script>
+  fetch("navegacion/barra_navegacion.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("navbar").innerHTML = data;
+    });
+</script>
+
+    <!-- Hero (Sección principal) -->
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1521336575822-6da63fb45455?w=1200&auto=format&fit=crop" alt="Modelo con outfit King Style">
+        <div class="hero-content">
+            <h1>Vestí tu estilo con King Style</h1>
+            <button>Explorar colección</button>
+        </div>
+    </section>
+
+    <!-- Secciones Intermedias -->
+    <section class="featured-products">
+        <h2>Novedades de la temporada</h2>
+        <div class="product-grid">
+            <!-- Productos (cards) se insertarán aquí -->
+        </div>
+    </section>
+
+    <section class="special-offers">
+        <h2>Ofertas especiales</h2>
+        <div class="product-carousel">
+            <!-- Carrusel de productos con descuento -->
+        </div>
+    </section>
+
+    <div id="contenido"></div>
+<script>
+  fetch("mostrar.php")
+    .then(r => r.text())
+    .then(html => document.getElementById("contenido").innerHTML = html);
+</script>
+
+
+    <section class="lookbook">
+        <h2>Inspiración de looks</h2>
+        <div class="lookbook-carousel">
+            <!-- Carrusel de looks -->
+        </div>
+    </section>
+
+    <!-- Sección App móvil -->
+    <section class="app-promo">
+        <img src="https://images.unsplash.com/photo-1603791452906-b9d996b23c59?w=600&auto=format&fit=crop" alt="App King Style">
+        <div class="app-promo-text">
+            <h2>Llevá King Style en tu bolsillo</h2>
+            <p>Descarga nuestra app y comprá donde quieras.</p>
+            <div class="app-buttons">
+                <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_ES.svg" alt="Google Play"></a>
+                <a href="#"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store"></a>
+            </div>
+        </div>
+    </section>
+
+<div id="footer"></div>
+
+<script>
+  fetch("navegacion/footer.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("footer").innerHTML = data;
+    });
+</script>
+
+    <script src="script.js"></script>
+</body>
+</html>
