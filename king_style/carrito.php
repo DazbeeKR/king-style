@@ -22,68 +22,103 @@ if (isset($_SESSION['carrito'])) {
     <meta charset="UTF-8">
     <title>Carrito de Compras</title>
     <link rel="stylesheet" href="style.css">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #fff;
+        /* === Layout base === */
+        html, body {
+            height: 100%;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        main {
+            flex: 1;
             padding: 20px;
         }
+
+        /* === Contenedor general === */
         .contenedor {
             display: flex;
             gap: 20px;
             align-items: flex-start;
+            flex-wrap: wrap;
         }
+
+        /* === Lista de productos === */
         .productos {
             flex: 2;
+            min-width: 300px;
         }
-        .resumen {
-            flex: 1;
-            border: 1px solid #000;
-            padding: 20px;
-        }
+
         .producto {
             display: flex;
             gap: 15px;
             border-bottom: 1px solid #ddd;
             padding: 15px 0;
+            align-items: center;
         }
+
         .producto img {
             width: 100px;
             height: auto;
             border: 1px solid #ddd;
         }
+
         .producto-info {
             flex: 1;
         }
+
         .producto-nombre {
             font-weight: bold;
             font-size: 16px;
             margin-bottom: 5px;
         }
+
         .producto-precio {
             font-weight: bold;
             font-size: 14px;
             margin-top: 8px;
         }
+
         .acciones {
             margin-top: 8px;
             font-size: 13px;
         }
+
         .acciones a {
             margin-right: 10px;
             color: #333;
             text-decoration: none;
         }
+
         .acciones a:hover {
             text-decoration: underline;
         }
+
+        /* === Resumen === */
+        .resumen {
+            flex: 1;
+            border: 1px solid #000;
+            padding: 20px;
+            min-width: 250px;
+        }
+
         .resumen h3 {
             margin-top: 0;
         }
+
         .resumen p {
             margin: 8px 0;
         }
+
         .btn {
             display: block;
             width: 100%;
@@ -95,77 +130,121 @@ if (isset($_SESSION['carrito'])) {
             font-size: 15px;
             cursor: pointer;
             text-transform: uppercase;
+            transition: background 0.3s;
         }
+
         .btn:hover {
             background: #444;
         }
+
         .detalle {
             font-size: 12px;
             color: #555;
         }
+
+        /* === Navbar y Footer === */
+        .header-nav, footer {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* === Responsivo === */
+        @media (max-width: 768px) {
+            .contenedor {
+                flex-direction: column;
+            }
+
+            .resumen {
+                width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <?php include 'navegacion/barra_navegacion.html' ?>
 
-    <h2>Carrito de Compras</h2>
+    <!-- Navbar -->
+    <?php include 'navegacion/barra_navegacion.php'; ?>
 
-    <?php if (isset($mensaje)): ?>
-        <p style="color:green;"><?= $mensaje ?></p>
-    <?php endif; ?>
+    <!-- Contenido principal -->
+    <main>
+        <h2>Carrito de Compras</h2>
 
-    <div class="contenedor">
-        <!-- Lista de productos -->
-        <div class="productos">
-            <h3>ARTÍCULO</h3>
-            <?php if (!empty($_SESSION['carrito'])): ?>
-                <?php foreach ($_SESSION['carrito'] as $item): ?>
-                <div class="producto">
-                    <img src="<?= $item['imagen'] ?>" alt="<?= $item['nombre'] ?>">
-                    <div class="producto-info">
-                        <div class="producto-nombre"><?= $item['nombre'] ?></div>
-                        <div>Cantidad: <?= $item['cantidad'] ?></div>
+        <?php if (isset($mensaje)): ?>
+            <p style="color:green;"><?= $mensaje ?></p>
+        <?php endif; ?>
+
+        <div class="contenedor">
+            <!-- Lista de productos -->
+            <div class="productos">
+                <h3>ARTÍCULO</h3>
+                <?php if (!empty($_SESSION['carrito'])): ?>
+                    <?php foreach ($_SESSION['carrito'] as $item): ?>
+                    <div class="producto">
+                        <img src="<?= $item['imagen'] ?>" alt="<?= $item['nombre'] ?>">
+                        <div class="producto-info">
+                        <div class="producto-nombre"><?= htmlspecialchars($item['nombre']) ?></div>
+                        <div><strong>Talle:</strong> <?= htmlspecialchars($item['talle']) ?></div>
+                        <div><strong>Cantidad:</strong> <?= $item['cantidad'] ?></div>
+
+                        <?php if (!empty($item['descuento']) && $item['descuento'] > 0): ?>
+                            <p class="detalle">Descuento aplicado: <?= $item['descuento'] ?>%</p>
+                        <?php endif; ?>
+
                         <p class="producto-precio">
                             ARS <?= number_format($item['precio'], 2, ',', '.') ?>
                         </p>
-                        <div class="acciones">
-                            <a href="#">guardar para después</a>
-                            <a href="#">mover a favoritos</a>
-                            <a href="#">eliminar</a>
-                            <a href="#">editar</a>
+                            <div class="acciones">
+                                <a href="#">guardar para después</a>
+                                <a href="#">mover a favoritos</a>
+                                <a href="#">eliminar</a>
+                                <a href="#">editar</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Tu carrito está vacío.</p>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>Tu carrito está vacío.</p>
+                <?php endif; ?>
+            </div>
+
+            <!-- Resumen del pedido -->
+            <div class="resumen">
+                <h3>RESUMEN DEL PEDIDO</h3>
+                <?php if (!empty($_SESSION['carrito'])): ?>
+                    <p><strong>Total estimado:</strong> 
+                        ARS <?= number_format($total, 2, ',', '.') ?></p>
+                        <a href="#">detalles</a></p>
+                    <p class="detalle">*Los artículos se cobrarán cuando se envíen. 
+                    El importe real se cobrará de acuerdo al tipo de cambio al momento del envío.</p>
+
+                    <form method="POST">
+                        <button class="btn" name="finalizar">Finalizar compra</button>
+                    </form>
+                    <button class="btn">Iniciar sesión para pagar más rápido</button>
+                <?php else: ?>
+                    <p>No hay productos.</p>
+                <?php endif; ?>
+            </div>
         </div>
 
-        <!-- Resumen del pedido -->
-        <div class="resumen">
-            <h3>RESUMEN DEL PEDIDO</h3>
-            <?php if (!empty($_SESSION['carrito'])): ?>
-                <p><strong>Total estimado:</strong> 
-                    ARS <?= number_format($total, 2, ',', '.') ?></p>
-                    <a href="#">detalles</a></p>
-                <p class="detalle">*Los artículos se cobrarán cuando se envíen. 
-                El importe real se cobrará de acuerdo al tipo de cambio al momento del envío.</p>
+        <br>
+        <a href="index.html">⬅ Seguir comprando</a>
+    </main>
 
-                <form method="POST">
-                    <button class="btn" name="finalizar">Finalizar compra</button>
-                </form>
-                <button class="btn">Iniciar sesión para pagar más rápido</button>
-            <?php else: ?>
-                <p>No hay productos.</p>
-            <?php endif; ?>
-        </div>
-    </div>
+    <!-- Footer -->
+    <?php include 'navegacion/footer.html'; ?>
 
-    <br>
-    <a href="index.html">⬅ Seguir comprando</a>
-
-    <?php include 'navegacion/footer.html' ?>
 </body>
 </html>
-
