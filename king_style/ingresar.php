@@ -15,6 +15,8 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $precio = $_POST['precio'];
+    $categoria = $_POST['categoria'];
+    $descripcion = $_POST['descripcion'];
 
     // Manejo de la imagen
     $imagen = "";
@@ -37,10 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insertar en la base de datos
-    $sql = "INSERT INTO productos (nombre, precio, imagen) VALUES ('$nombre', '$precio', '$imagen')";
+    $sql = "INSERT INTO productos (nombre, precio, categoria, descripcion, imagen) VALUES ('$nombre', '$precio', '$categoria', '$descripcion', '$imagen')";
     
     if ($conn->query($sql) === TRUE) {
-        echo "<p styl   e='color:green;'>Producto agregado con éxito</p>";
+        echo "<p style='color:green;'>Producto agregado con éxito</p>";
     } else {
         echo "Error: " . $conn->error;
     }
@@ -58,6 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form method="POST" enctype="multipart/form-data">
         <label>Nombre:</label><br>
         <input type="text" name="nombre" required><br><br>
+
+        <label>Categorias:</label><br>
+        <input type="text" name="categoria" required><br><br>
+
+        <label>Descripcion:</label><br>
+        <input type="text" name="descripcion" required><br><br>
 
         <label>Precio:</label><br>
         <input type="number" name="precio" step="0.01" required><br><br>
