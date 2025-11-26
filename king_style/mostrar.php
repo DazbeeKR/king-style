@@ -8,83 +8,16 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) die("Conexión fallida: " . $conn->connect_error);
 ?>
 
-<head>
-  <style>
-.productos-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.productos-row .card {
-  flex: 1 1 calc(25% - 20px);
-  min-width: 220px;
-  max-width: 320px;
-  border: none;
-  box-shadow: 0 6px 10px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease-in-out;
-}
-
-.productos-row .card:hover { transform: scale(1.04); }
-
-.productos-row .card .card-img-top {
-  width: 100%;
-  height: auto;
-  max-height: 250px;
-  object-fit: cover;
-  border-radius: 6px 6px 0 0;
-}
-
-.precio-anterior {
-  text-decoration: line-through;
-  color: #999;
-  font-size: 0.9em;
-}
-
-.precio-descuento {
-  color: #008080;
-  font-weight: bold;
-  font-size: 1.1em;
-}
-
-.etiqueta-promo {
-  background: #008080;
-  color: white;
-  padding: 5px 10px;
-  font-size: 0.9em;
-  border-radius: 6px;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-h2.seccion {
-  text-align: center;
-  margin: 40px 0 20px;
-  color: #333;
-}
-
-
-@media (max-width: 992px) {
-  .productos-row .card { flex: 1 1 calc(50% - 20px); }
-}
-@media (max-width: 576px) {
-  .productos-row .card { flex: 1 1 100%; }
-}
-  </style>
-</head>
-
 <body>
 
 <?php
-session_start();
 if (isset($_SESSION['mensaje'])) {
     echo "<p style='color:green;'>" . $_SESSION['mensaje'] . "</p>";
     unset($_SESSION['mensaje']);
 }
 ?>
 
-<h2 class="seccion">🆕 Últimos productos</h2>
+<h2 class="seccion">Últimos productos</h2>
 <div class="container mt-4">
   <div class="productos-row">
   <?php
@@ -104,12 +37,12 @@ if (isset($_SESSION['mensaje'])) {
 </div>
 
 
-<h2 class="seccion">🔥 Promociones exclusivas</h2>
+<h2 class="seccion">Descuentos del día</h2>
 <div class="container mt-4">
   <div class="productos-row">
   <?php
 
-  $seed = date('Ymd'); // Ej: 20251105
+  $seed = date('Ymd');
   $conn->query("SET @seed := $seed");
 
 

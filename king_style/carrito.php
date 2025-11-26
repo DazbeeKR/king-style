@@ -12,13 +12,12 @@ if (isset($_GET['accion']) && isset($_GET['id']) && isset($_GET['talle'])) {
 
             if ($accion === 'eliminar') {
                 unset($_SESSION['carrito'][$index]);
-                $_SESSION['carrito'] = array_values($_SESSION['carrito']); // reindexar
+                $_SESSION['carrito'] = array_values($_SESSION['carrito']);
                 $mensaje = "🗑️ Producto eliminado del carrito.";
                 break;
             }
 
             if ($accion === 'editar') {
-                // Guardar el ID del producto antes de eliminarlo
                 $producto_id = $item['id'];
                 unset($_SESSION['carrito'][$index]);
                 $_SESSION['carrito'] = array_values($_SESSION['carrito']);
@@ -267,7 +266,6 @@ if (isset($_SESSION['carrito'])) {
                     <form method="POST">
                         <button class="btn" name="finalizar">Finalizar compra</button>
                     </form>
-                    <button class="btn">Iniciar sesión para pagar más rápido</button>
                 <?php else: ?>
                     <p>No hay productos.</p>
                 <?php endif; ?>
@@ -275,7 +273,7 @@ if (isset($_SESSION['carrito'])) {
         </div>
 
         <br>
-        <a href="index.html">⬅ Seguir comprando</a>
+        <a href="index.php">⬅ Seguir comprando</a>
     </main>
 
     <?php include 'navegacion/footer.html'; ?>

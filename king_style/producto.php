@@ -34,122 +34,6 @@ $producto = $resultado->fetch_assoc();
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($producto['nombre']) ?> - Detalle del producto</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #fff;
-        }
-
-        .producto-detalle {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 1100px;
-            margin: 40px auto;
-            gap: 40px;
-            padding: 20px;
-        }
-
-        .producto-detalle img {
-            flex: 1 1 400px;
-            max-width: 500px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            object-fit: cover;
-        }
-
-        .info {
-            flex: 1 1 400px;
-        }
-
-        .info h1 {
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-
-        .info p {
-            margin: 10px 0;
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .precio {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #008080;
-            margin: 15px 0;
-        }
-
-        .talle, .cantidad {
-            margin: 15px 0;
-        }
-
-        select {
-            padding: 8px;
-            font-size: 1em;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-
-        .btn-agregar {
-            background-color: #008080;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1em;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        .btn-agregar:hover {
-            background-color: #006666;
-        }
-
-        a.volver {
-            display: inline-block;
-            margin: 30px auto;
-            text-decoration: none;
-            color: #008080;
-            font-weight: bold;
-        }
-
-        a.volver:hover {
-            text-decoration: underline;
-        }
-
-        .precio-anterior {
-            text-decoration: line-through;
-            color: #999;
-        }
-        
-        .etiqueta-promo {
-            background: #008080;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .stock-disponible {
-            font-weight: bold;
-            padding: 8px 12px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        .stock-bajo {
-            background-color: #ffdddd;
-            color: #b30000;
-        }
-
-        .stock-alto {
-            background-color: #ddffdd;
-            color: #008000;
-        }
-    </style>
 </head>
 <body>
 
@@ -223,10 +107,11 @@ $producto = $resultado->fetch_assoc();
             <input type="hidden" name="precio" value="<?= $producto['precio'] ?>">
             <input type="hidden" name="imagen" value="<?= htmlspecialchars($producto['imagen']) ?>">
 
-            <button type="submit" class="btn-agregar" <?= ($producto['stock'] <= 0 ? 'disabled' : '') ?>>Agregar al carrito 🛒</button>
+            <button class="boton-carrito" type="submit" class="btn-agregar" <?= ($producto['stock'] <= 0 ? 'disabled' : '') ?>>Agregar al carrito</button>
         </form>
+        
 
-        <a href="index.html" class="volver">⬅ Volver a la tienda</a>
+        <a href="index.php" class="volver">⬅ Volver a la tienda</a>
     </div>
 </div>
 

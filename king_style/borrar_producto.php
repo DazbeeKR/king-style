@@ -14,7 +14,6 @@ if ($conn->connect_error) {
 
 if (isset($_POST['id'])) {
     $id = intval($_POST['id']);
-    // Eliminar registro y su imagen si existe
     $res = $conn->query("SELECT imagen FROM productos WHERE id = $id");
     if ($res && $res->num_rows > 0) {
         $row = $res->fetch_assoc();
